@@ -1,19 +1,20 @@
 import React, {Component} from 'react';
 import './app.css';
 import TodoList from './components/TodoComponents/TodoList';
+import TodoForm from './components/TodoComponents/TodoForm';
 
 const todos = [
   {
-    task: 'Learn How to use React',
-    id: 1528817084358,
-    completed: "false"
+    task: 'Organize Garage',
+    id: 1528817077286,
+    completed: false
   },
   {
-    task: 'Make an Awesome ToDo List App with React',
-    id: 1528817077286,
-    completed: "false"
-  },
-]
+    task: 'Bake Cookies',
+    id: 1528817084358,
+    completed: false
+  }
+];
 
 
 class App extends Component {
@@ -21,31 +22,22 @@ class App extends Component {
     super()
     this.state = {
       todosState: todos,
-      todo: [
-        {
-        task: '',
-        id: '',
-        completed: "false"
-        }
-      ]
-    }
-  }
+      todo: ''
+    };
+  };
   handleChanges = event => {
-    console.log(event.target.value);
+    console.log(event.target.value,event.target.name);
     this.setState({
-      todo: {
-      ...this.state.todo,
       [event.target.name]: event.target.value
-      }
     });
   };
 
   addTodo = event => {
-
     event.preventDefault();
+    const newTodo = {task: this.state.todo, completed: "false", id: Date.now() };
     this.setState({
-      todosState: [...this.state.todosState, this.state.todo],
-      todo: {}
+      todosState: [...this.state.todosState, newTodo],
+      todo: ''
     });
   };
 
@@ -54,9 +46,12 @@ class App extends Component {
       <div className="container">
         <TodoList
         todosArr={this.state.todosState}
-        newTodosArr={this.state.todo}
+         />
+
+         <TodoForm
+        value={this.state.todo}
         onSubmit={this.addTodo}
-        onChange={this.handleChanges}
+        handleChanges={this.handleChanges}
          />
       </div>
     );
