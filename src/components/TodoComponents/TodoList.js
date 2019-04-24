@@ -5,15 +5,19 @@ import TodoForm from './TodoForm';
 
 class TodoList extends Component {
   render() {
-      const todoList = this.props.todosArr.map((arr, index) => {
-          return <Todo key={index} {...arr} />
-      });
     return (
       <div className="toDoListContainer">
           <h1>ToDo List:</h1>
-          {todoList}
+          {this.props.todosArr.map(todo => (
+          <Todo 
+          todo={todo} 
+          key={todo.id} 
+            />
+          ))}
           <TodoForm
-        todoEntrys={this.state.todoEntry}
+        newTodosArr={this.props.todo}
+        onSubmit={this.props.onSubmit}
+        onChange={this.props.onChange}
          />
       </div>
     );

@@ -17,43 +17,47 @@ const todos = [
 
 
 class App extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
-      todos: todos,
+      todosState: todos,
+      todo: [
+        {
+        task: '',
+        id: '',
+        completed: "false"
+        }
+      ]
+    }
+  }
+  handleChanges = event => {
+    console.log(event.target.value);
+    this.setState({
       todo: {
-        newTodo: ''
+      ...this.state.todo,
+      [event.target.name]: event.target.value
       }
-    }
-  }
-  click = completed => {
-    if(completed === "false") {
-      this.add()
-    } 
-    else if(completed === "true") {
-      this.remove()
-    }
-  }
-  add = () => {
-    this.setState({
+    });
+  };
 
-    })
-  }
-  remove = () => {
-    this.setState({
+  addTodo = event => {
 
-    })
-  }
+    event.preventDefault();
+    this.setState({
+      todosState: [...this.state.todosState, this.state.todo],
+      todo: {}
+    });
+  };
+
   render() {
     return (
       <div className="container">
         <TodoList
-        onClick={(e) => this.click(e.target.todoEntry)}
-        todosArr={this.state.todos}
+        todosArr={this.state.todosState}
+        newTodosArr={this.state.todo}
+        onSubmit={this.addTodo}
+        onChange={this.handleChanges}
          />
-        {/* <TodoForm
-        todoEntrys={this.state.todoEntry}
-         /> */}
       </div>
     );
   }
