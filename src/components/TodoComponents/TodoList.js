@@ -1,19 +1,22 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './Todo.css';
 import Todo from './Todo';
 
-const TodoList = props => {
+class TodoList extends Component {
+  render() {
     return (
       <div className="toDoListContainer">
           <h1>todo List:</h1>
-          {props.todosArr.map(todo => (
+          {this.props.todosArr.map(todo => (
           <Todo 
           todo={todo} 
-          key={todo.id} 
+          key={todo.id}
+          onClick={this.props.markComplete} 
             />
           ))}
       </div>
     );
+  }
 }
 
 export default TodoList;

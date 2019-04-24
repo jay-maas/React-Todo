@@ -1,13 +1,17 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './Todo.css';
 
-const Todo = props => {
-  return (
-    
-    <div className="todo">
-      <h2>{props.todo.task}</h2>
-    </div>
-  );
+class Todo extends Component {
+  render() {
+    return (
+      <div className="todo">
+        <h2 
+        onClick={this.props.onClick}
+        id={this.props.todo.id}
+        >{this.props.todo.task}</h2>
+      </div>
+    );
+  }
 }
 
 export default Todo;
