@@ -76,7 +76,9 @@ class App extends Component {
         return todo;
       }
     });
-    this.setState({doneTodos})
+    this.setState({
+      doneTodos
+    })
     }
 
     clearAllCompleted = event => {
@@ -84,8 +86,9 @@ class App extends Component {
       console.log(event.target)
       let clearTodos = [...this.state.todosState]
       clearTodos = clearTodos.filter(todo => !todo.completed);
-      this.setState({ todosState:clearTodos })
-      console.log(clearTodos)
+      this.setState({ 
+        todosState:clearTodos 
+      })
     }
 
     searchChange() {
@@ -97,20 +100,13 @@ class App extends Component {
 
 
     clearCompleted = id => {
-      console.log(id)
       let clearTodo = [...this.state.todosState]
-      clearTodo = clearTodo.filter(todo => !todo.completed);
-      this.setState({ todosState:clearTodo })
+      clearTodo = clearTodo.filter(todo => id != todo.id);
+      this.setState({ 
+        todosState:clearTodo 
+      })
     }
 
-    componentDidMount() {
-    }
-
-    handleChange = event => {
-      this.setState({
-        searchString: event.target.value
-      });
-    }
   render() {
     return (
       <div className="container">
