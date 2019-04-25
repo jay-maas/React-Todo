@@ -6,7 +6,7 @@ class TodoList extends Component {
   render() {
     return (
       <div className="toDoListContainer">
-          <h1>todo List:</h1>
+          <h1>todos</h1>
           {this.props.todosArr.map(todo => (
           <Todo 
           clear={this.props.clear}

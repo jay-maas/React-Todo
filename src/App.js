@@ -2,19 +2,41 @@ import React, {Component} from 'react';
 import './app.css';
 import TodoList from './components/TodoComponents/TodoList';
 import TodoForm from './components/TodoComponents/TodoForm';
-import SimpleStorage from 'react-simple-storage';
+//If you would like to use local storage please use the following import
+//import SimpleStorage from 'react-simple-storage'; 
+//Put this into the return inside the wrapping div
+//<SimpleStorage parent={this} />
 
-
-const anotherTodo = []
-
-
+const anotherTodo = [
+  {
+    task: 'Organize Garage',
+    id: 1528817077286,
+    completed: false
+  },
+  {
+    task: 'Bake Cookies',
+    id: 1528817084358,
+    completed: false
+  },
+  {
+    task: 'Organize Garage',
+    id: 1528817077886,
+    completed: false
+  },
+  {
+    task: 'Bake Cookies',
+    id: 1528817884358,
+    completed: false
+  }
+]
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
       todosState: anotherTodo,
-      todo: ''
+      todo: '',
+      searchString: ''
     };
   };
   handleChanges = event => {
@@ -44,7 +66,7 @@ class App extends Component {
       if(id===todo.id) {
         todo.completed = !todo.completed;
         if(todo.completed===true) {
-          event.target.style.color = "lightgrey"
+          event.target.style.color = "white"
           event.target.style.textDecoration = "line-through"} else {
             event.target.style.color = "initial"
             event.target.style.textDecoration = "initial"
@@ -66,6 +88,14 @@ class App extends Component {
       console.log(clearTodos)
     }
 
+    searchChange() {
+      this.setState({
+        search: this.refs.search.value
+      });
+    }
+
+
+
     clearCompleted = id => {
       console.log(id)
       let clearTodo = [...this.state.todosState]
@@ -73,10 +103,18 @@ class App extends Component {
       this.setState({ todosState:clearTodo })
     }
 
+    componentDidMount() {
+    }
+
+    handleChange = event => {
+      this.setState({
+        searchString: event.target.value
+      });
+    }
   render() {
     return (
       <div className="container">
-      <SimpleStorage parent={this} />
+      
         <TodoList
         clear={this.clearCompleted}
         todosArr={this.state.todosState}
