@@ -16,6 +16,7 @@ class TodoForm extends Component {
                  />
                 <button>Add todo</button>
           </form>
+          <button onClick={this.props.clearAll}>Clear All</button>
       </div>
     );
   }

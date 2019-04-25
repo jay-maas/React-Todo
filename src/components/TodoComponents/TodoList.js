@@ -9,6 +9,7 @@ class TodoList extends Component {
           <h1>todo List:</h1>
           {this.props.todosArr.map(todo => (
           <Todo 
+          clear={this.props.clear}
           todo={todo} 
           key={todo.id}
           onClick={this.props.markComplete} 

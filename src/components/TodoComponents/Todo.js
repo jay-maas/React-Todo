@@ -5,6 +5,7 @@ class Todo extends Component {
   render() {
     return (
       <div>
+      <button onClick={() =>this.props.clear(this.props.todo.id)} />
         <h1 
         data-completed={this.props.todo.completed}
         //onClick={() => this.props.onClick(this.props.todo.id)}

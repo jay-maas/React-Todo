@@ -2,26 +2,18 @@ import React, {Component} from 'react';
 import './app.css';
 import TodoList from './components/TodoComponents/TodoList';
 import TodoForm from './components/TodoComponents/TodoForm';
+import SimpleStorage from 'react-simple-storage';
 
-const todos = [
-  {
-    task: 'Learn JavaScript',
-    id: 1528817077286,
-    completed: false
-  },
-  {
-    task: 'Learn React',
-    id: 1528817084358,
-    completed: false
-  }
-];
+
+const anotherTodo = []
+
 
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      todosState: todos,
+      todosState: anotherTodo,
       todo: ''
     };
   };
@@ -52,7 +44,9 @@ class App extends Component {
       if(id===todo.id) {
         todo.completed = !todo.completed;
         if(todo.completed===true) {
+          event.target.style.color = "lightgrey"
           event.target.style.textDecoration = "line-through"} else {
+            event.target.style.color = "initial"
             event.target.style.textDecoration = "initial"
           }
         return todo;
@@ -63,19 +57,28 @@ class App extends Component {
     this.setState({doneTodos})
     }
 
-
-  lineThrough = event => {
-    if(check==="false") {
-      event.target.style.textDecoration = "line-through"
-    } else {
-      event.target.style.textDecoration = "initial"
+    clearAllCompleted = event => {
+      event.preventDefault();
+      console.log(event.target)
+      let clearTodos = [...this.state.todosState]
+      clearTodos = clearTodos.filter(todo => !todo.completed);
+      this.setState({ todosState:clearTodos })
+      console.log(clearTodos)
     }
-  }
+
+    clearCompleted = id => {
+      console.log(id)
+      let clearTodo = [...this.state.todosState]
+      clearTodo = clearTodo.filter(todo => !todo.completed);
+      this.setState({ todosState:clearTodo })
+    }
 
   render() {
     return (
       <div className="container">
+      <SimpleStorage parent={this} />
         <TodoList
+        clear={this.clearCompleted}
         todosArr={this.state.todosState}
         markComplete={this.markComplete}
          />
@@ -84,6 +87,7 @@ class App extends Component {
         value={this.state.todo}
         onSubmit={this.addTodo}
         onChange={this.handleChanges}
+        clearAll={this.clearAllCompleted}
          />
       </div>
     );
