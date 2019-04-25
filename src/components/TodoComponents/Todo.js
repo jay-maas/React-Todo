@@ -4,11 +4,14 @@ import './Todo.css';
 class Todo extends Component {
   render() {
     return (
-      <div className="todo">
-        <h2 
+      <div>
+        <h1 
+        data-completed={this.props.todo.completed}
+        //onClick={() => this.props.onClick(this.props.todo.id)}
         onClick={this.props.onClick}
         id={this.props.todo.id}
-        >{this.props.todo.task}</h2>
+        className="todo"
+        >{this.props.todo.task}</h1>
       </div>
     );
   }
