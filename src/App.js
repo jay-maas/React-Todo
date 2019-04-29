@@ -1,13 +1,128 @@
-import React from 'react';
+import React, {Component} from 'react';
+import './app.css';
+import TodoList from './components/TodoComponents/TodoList';
+import TodoForm from './components/TodoComponents/TodoForm';
+//If you would like to use local storage please use the following import
+//import SimpleStorage from 'react-simple-storage'; 
+//Put this into the return inside the wrapping div
+//<SimpleStorage parent={this} />
 
-class App extends React.Component {
-  // you will need a place to store your state in this component.
-  // design `App` to be the parent component of your application.
-  // this component is going to take care of state, and any change handlers you need to work with your state
+const anotherTodo = [
+  {
+    task: 'Organize Garage',
+    id: 1528817077286,
+    completed: false
+  },
+  {
+    task: 'Bake Cookies',
+    id: 1528817084358,
+    completed: false
+  },
+  {
+    task: 'Organize Garage',
+    id: 1528817077886,
+    completed: false
+  },
+  {
+    task: 'Bake Cookies',
+    id: 1528817884358,
+    completed: false
+  }
+]
+
+class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      todosState: anotherTodo,
+      todo: '',
+      searchString: ''
+    };
+  };
+  handleChanges = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
+
+  addTodo = event => {
+    event.preventDefault();
+    const newTodo = {
+      task: this.state.todo,
+      completed: false,
+      id: Date.now()
+    }
+    this.setState({
+      todosState: [...this.state.todosState, newTodo],
+      todo: ''
+    });
+  };
+
+  markComplete = event => {
+    let id = event.target.id
+    id = parseInt(id, 10)
+    const doneTodos = [...this.state.todosState]
+    doneTodos.map(todo=> {
+      if(id===todo.id) {
+        todo.completed = !todo.completed;
+        if(todo.completed===true) {
+          event.target.style.color = "white"
+          event.target.style.textDecoration = "line-through"} else {
+            event.target.style.color = "initial"
+            event.target.style.textDecoration = "initial"
+          }
+        return todo;
+      } else {
+        return todo;
+      }
+    });
+    this.setState({
+      doneTodos
+    })
+    }
+
+    clearAllCompleted = event => {
+      event.preventDefault();
+      console.log(event.target)
+      let clearTodos = [...this.state.todosState]
+      clearTodos = clearTodos.filter(todo => !todo.completed);
+      this.setState({ 
+        todosState:clearTodos 
+      })
+    }
+
+    searchChange() {
+      this.setState({
+        search: this.refs.search.value
+      });
+    }
+
+
+
+    clearCompleted = id => {
+      let clearTodo = [...this.state.todosState]
+      clearTodo = clearTodo.filter(todo => id != todo.id);
+      this.setState({ 
+        todosState:clearTodo 
+      })
+    }
+
   render() {
     return (
-      <div>
-        <h2>Welcome to your Todo App!</h2>
+      <div className="container">
+      
+        <TodoList
+        clear={this.clearCompleted}
+        todosArr={this.state.todosState}
+        markComplete={this.markComplete}
+         />
+
+         <TodoForm
+        value={this.state.todo}
+        onSubmit={this.addTodo}
+        onChange={this.handleChanges}
+        clearAll={this.clearAllCompleted}
+         />
       </div>
     );
   }
